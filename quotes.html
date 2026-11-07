@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слово Пацана | Цитаты и Атмосфера</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>СЛОВО ПАЦАНА</h1>
+        <p>Кровь на асфальте • Казань, 1989</p>
+        
+        <!-- Блок с кнопкой и плеером -->
+        <div style="margin-bottom: 15px;">
+            <button id="music-toggle" class="action-btn" style="padding: 10px 20px; font-size: 1em; background-color: #222;">🎵 ВКЛЮЧИТЬ МУЗЫКУ</button>
+            
+            <!-- Плеер -->
+            <div id="music-player-container" style="display: none; margin: 15px auto 0 auto; max-width: 300px;">
+                <audio id="bg-music" src="Пыяла - АИГЕЛ.mp3" loop controls style="width: 100%;"></audio>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html">Главная</a>
+            <a href="rules.html">Кодекс улицы</a>
+            <a href="quotes.html" class="active">Цитаты и Атмосфера</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Блок 1: Легендарные цитаты -->
+        <section class="content-block">
+            <h2>1. Фразы, которые знают все</h2>
+            <p>Эти слова разлетелись на мемы и стали частью современной культуры.</p>
+            
+            <div class="quote-box">
+                «А теперь запомни: ты теперь пацан, ты теперь с улицы, а кругом — враги».
+                <span class="quote-author">— Марат</span>
+            </div>
+
+            <div class="quote-box">
+                «Чушь не пороть. Западло — это не по-нашему».
+                <span class="quote-author">— Вова Адидас</span>
+            </div>
+
+            <div class="quote-box">
+                «Ты либо с нами, либо против нас. Третьего не дано».
+                <span class="quote-author">— Пальто</span>
+            </div>
+        </section>
+
+        <!-- Блок 2: Галерея кадров -->
+        <section class="content-block">
+            <h2>2. Дух времени в кадрах</h2>
+            <p>Спортивные костюмы, панельки, магнитофоны и суровые взгляды. Вот она — эстетика конца 80-х.</p>
+            
+            <div class="gallery">
+                <img src="https://uma-static.rtbcdn.ru/cwebp/pic/epgpicturedownloadlog/0a/ea/0aea49587c8d001c477ded7e92a8ba54.jpg?size=1920&quality=90" alt="Постер сериала">
+                <img src="https://i.pinimg.com/736x/9d/bb/9f/9dbb9fedcdcff0f7caf31382326968e1.jpg" alt="Постер">
+                <img src="https://i.pinimg.com/1200x/9c/ec/e6/9cece69066ead0e77ed2288d0ca6f39f.jpg" alt="Старый магнитофон">
+                <img src="https://i.pinimg.com/736x/62/7d/14/627d141401d110a982265bf268a08ac2.jpg" alt="Улицы 80-х">
+                <img src="https://i.pinimg.com/736x/76/f6/45/76f645c6c4047c5079a17a0f5d9cc657.jpg" alt="Постер">
+                <img src="https://i.pinimg.com/736x/ad/45/0f/ad450f638c377dcbb1d6f25e60aedcc7.jpg" alt="Постер">
+            </div>
+        </section>
+
+        <!-- Блок 3: Финальная проверка -->
+        <section class="content-block">
+            <p class="highlight">«Пацан сказал — пацан сделал».</p>
+            <div style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" class="action-btn">← На главную</a>
+                <!-- Кнопка перехода к финальной проверке -->
+                <a href="final.html" class="action-btn trigger-final-quiz" style="background-color: #b33939;">Пройти финальную проверку →</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Фан-сайт создан в рамках практики HTML & CSS.</p>
+        <p>&copy; 2026. Пацан сказал — пацан сделал.</p>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО (ФИНАЛЬНАЯ ПРОВЕРКА) -->
+    <div id="final-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>ФИНАЛЬНЫЙ ВОПРОС</h2>
+            
+            <!-- ФОТО КОЩЕЯ -->
+            <div class="koshchey-photo">
+                <img src="https://i.pinimg.com/736x/24/e5/53/24e553b035dfe617e23d00705896c762.jpg" alt="Кощей" style="max-width: 200px; border: 3px solid #111; box-shadow: 5px 5px 0px #b33939; margin-bottom: 15px; filter: grayscale(1);">
+            </div>
+
+            <p style="font-weight: bold; font-size: 1.1em; margin-top: 10px;">Наезжает на тебя Кащей. Че будешь делать?</p>
+            
+            <!-- Варианты ответов -->
+            <button class="action-btn final-btn" data-correct="false" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">А) Прогнусь под него, отдам телефон</button>
+            <button class="action-btn final-btn" data-correct="true" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">Б) Отшиваю Кащея и стою за себя</button>
+            
+            <div id="final-message" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+            
+            <button id="close-final-modal" style="background: none; border: none; color: #b33939; cursor: pointer; margin-top: 15px; text-decoration: underline; font-family: 'Oswald', sans-serif;">Отмена</button>
+        </div>
+    </div>
+
+    <!-- СКРИПТЫ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- ЗВУК КЛИКА (ИМЕННО AUDIO.M4A) ---
+            const clickSound = new Audio('audio.m4a');
+            clickSound.volume = 1.0; 
+
+            function playClick() {
+                clickSound.currentTime = 0; 
+                clickSound.play().catch(e => console.log("Звук клика заблокирован:", e));
+            }
+
+            // --- 1. МУЗЫКА ---
+            const musicBtn = document.getElementById('music-toggle');
+            const bgMusic = document.getElementById('bg-music');
+            const playerContainer = document.getElementById('music-player-container');
+            
+            const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (bgMusic) {
+                bgMusic.currentTime = savedTime;
+                if (wasPlaying) {
+                    playerContainer.style.display = "block";
+                    bgMusic.play().then(() => {
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                    }).catch(e => console.log("Автовоспроизведение заблокировано."));
+                }
+                bgMusic.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicTime', bgMusic.currentTime);
+                });
+            }
+
+            if (musicBtn && bgMusic) {
+                musicBtn.addEventListener('click', () => {
+                    playClick(); 
+
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                        musicBtn.textContent = "🎵 ВКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#222";
+                        localStorage.setItem('musicPlaying', 'false');
+                    } else {
+                        bgMusic.volume = 0.3;
+                        bgMusic.play();
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                        localStorage.setItem('musicPlaying', 'true');
+                        playerContainer.style.display = "block";
+                    }
+                });
+            }
+
+            // --- 2. ЗВУК КЛИКА ПО МЕНЮ И КНОПКАМ ---
+            document.querySelectorAll('.main-nav a, .action-btn').forEach(link => {
+                link.addEventListener('click', () => {
+                    playClick(); 
+                });
+            });
+
+            // --- 3. ФИНАЛЬНАЯ ПРОВЕРКА ---
+            const finalModal = document.getElementById('final-modal');
+            const closeFinalModal = document.getElementById('close-final-modal');
+            const finalBtns = document.querySelectorAll('.final-btn');
+            const finalMessage = document.getElementById('final-message');
+            const triggerFinalQuiz = document.querySelector('.trigger-final-quiz');
+
+            if (triggerFinalQuiz) {
+                triggerFinalQuiz.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    playClick(); 
+                    finalModal.style.display = "flex"; 
+                });
+            }
+
+            if (closeFinalModal) {
+                closeFinalModal.addEventListener('click', () => {
+                    playClick(); 
+                    finalModal.style.display = "none";
+                    finalMessage.textContent = ""; 
+                });
+            }
+
+            finalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playClick(); 
+
+                    const isCorrect = btn.getAttribute('data-correct') === 'true';
+
+                    if (isCorrect) {
+                        finalMessage.textContent = "Красава! Отшил Кащея — значит, ты пацан!";
+                        finalMessage.style.color = "#00ffcc";
+                        setTimeout(() => {
+                            window.location.href = "final.html";
+                        }, 1500);
+                    } else {
+                        finalMessage.textContent = "Прогнулся? Позор... Ты не пацан, а чушпан!";
+                        finalMessage.style.color = "#ff0000";
+                        document.body.classList.add('vhs-glitch');
+                        setTimeout(() => {
+                            document.body.classList.remove('vhs-glitch');
+                        }, 2000); 
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

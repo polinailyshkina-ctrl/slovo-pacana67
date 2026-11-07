@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слово Пацана | Главная</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Скрытые аудиофайлы -->
+    <audio id="siren-sound" src="siren.m4a" preload="auto"></audio>
+
+    <header>
+        <h1>СЛОВО ПАЦАНА</h1>
+        <p>Кровь на асфальте • Казань, 1989</p>
+        
+        <div style="margin-bottom: 15px;">
+            <button id="music-toggle" class="action-btn" style="padding: 10px 20px; font-size: 1em; background-color: #222;">🎵 ВКЛЮЧИТЬ МУЗЫКУ</button>
+            
+            <div id="music-player-container" style="display: none; margin: 15px auto 0 auto; max-width: 300px;">
+                <audio id="bg-music" src="Пыяла - АИГЕЛ.mp3" loop controls style="width: 100%;"></audio>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html" class="active">Главная</a>
+            <a href="rules.html">Кодекс улицы</a> 
+            <a href="quotes.html">Цитаты и Атмосфера</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="content-block">
+            <h2>1. О чём этот сериал</h2>
+            <p>Конец 80-х. СССР трещит по швам, а на улицах Казани появляются первые группировки. История о том, как подростки искали своё место в жестоком мире, где за спиной — улица, а впереди — неизвестность.</p>
+        </section>
+
+        <section class="content-block">
+            <h2>2. Кто есть кто</h2>
+            <table>
+                <tr>
+                    <th>Кличка / Имя</th>
+                    <th>Роль</th>
+                    <th>Группировка</th>
+                </tr>
+                <tr>
+                    <td>Марат</td>
+                    <td>Главный герой, брат Вовы</td>
+                    <td>Универсам</td>
+                </tr>
+                <tr>
+                    <td>Вова Адидас</td>
+                    <td>Авторитет, старший брат</td>
+                    <td>Универсам</td>
+                </tr>
+                <tr>
+                    <td>Андрей «Пальто»</td>
+                    <td>Новичок в группировке</td>
+                    <td>Универсам</td>
+                </tr>
+                <tr>
+                    <td>Жёлтый</td>
+                    <td>Главарь враждующей банды</td>
+                    <td>Дом Быта</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="content-block">
+            <h2>3. Правила — это всё</h2>
+            <p>Жизнь на улице диктует свои законы. Узнай, по каким правилам жили пацаны в 1989 году.</p>
+            <a href="rules.html" class="action-btn trigger-quiz">Перейти к кодексу →</a>
+        </section>
+
+        <section class="content-block">
+            <h2>4. Сигнал тревоги</h2>
+            <p>Если на районе неспокойно, нужно действовать быстро. Жми на кнопку!</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="sos-btn" class="action-btn">🚨 ВРУБИТЬ СИРЕНУ 🚨</button>
+                <div id="sos-message" class="highlight" style="display: none; margin-top: 25px; border-left-color: #ff0000; background-color: #111; color: #ff3333;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Фан-сайт создан в рамках практики HTML & CSS.</p>
+        <p>&copy; 2026. Пацан сказал — пацан сделал.</p>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО С ТЕСТОМ -->
+    <div id="quiz-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>ПРОВЕРКА НА СВОЕГО</h2>
+            <p>Прежде чем пройти дальше, докажи, что ты с района.</p>
+            
+            <p style="font-weight: bold; font-size: 1.1em; margin-top: 20px;">Что значит «отвечать за базар»?</p>
+            
+            <button class="action-btn quiz-btn" data-correct="false" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">А) Громко кричать на рынке</button>
+            <button class="action-btn quiz-btn" data-correct="true" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">Б) Держать данное слово</button>
+            <button class="action-btn quiz-btn" data-correct="false" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">В) Торговать на базаре</button>
+            
+            <div id="modal-quiz-message" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+            
+            <button id="close-modal" style="background: none; border: none; color: #b33939; cursor: pointer; margin-top: 15px; text-decoration: underline; font-family: 'Oswald', sans-serif;">Отмена</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- ЗВУК КЛИКА (ДОБАВЛЕН) ---
+            const clickSound = new Audio('audio.m4a');
+            clickSound.volume = 1.0;
+
+            function playClick() {
+                clickSound.currentTime = 0; 
+                clickSound.play().catch(e => console.log("Звук клика заблокирован:", e));
+            }
+
+            // --- 1. МУЗЫКА ---
+            const musicBtn = document.getElementById('music-toggle');
+            const bgMusic = document.getElementById('bg-music');
+            const playerContainer = document.getElementById('music-player-container');
+            
+            const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (bgMusic) {
+                bgMusic.currentTime = savedTime;
+                if (wasPlaying) {
+                    playerContainer.style.display = "block";
+                    bgMusic.play().then(() => {
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                    }).catch(e => console.log("Автовоспроизведение заблокировано."));
+                }
+                bgMusic.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicTime', bgMusic.currentTime);
+                });
+            }
+
+            if (musicBtn && bgMusic) {
+                musicBtn.addEventListener('click', () => {
+                    playClick(); // Звук клика
+
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                        musicBtn.textContent = "🎵 ВКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#222";
+                        localStorage.setItem('musicPlaying', 'false');
+                    } else {
+                        bgMusic.volume = 0.3;
+                        bgMusic.play();
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                        localStorage.setItem('musicPlaying', 'true');
+                        playerContainer.style.display = "block";
+                    }
+                });
+            }
+
+            // --- 2. СИРЕНА ---
+            const sosBtn = document.getElementById('sos-btn');
+            const sosMessage = document.getElementById('sos-message');
+            const sirenSound = document.getElementById('siren-sound');
+            const sosMessages = [
+                "Атас! Чужие на районе! Держим ухо востро.",
+                "Внимание! Западло на подходе. Не подставляйся.",
+                "Код красный! У кого-то базар не по понятиям.",
+                "Шухер! Готовься стоять за своих.",
+                "Тревога! Улица не спит, и мы тоже."
+            ];
+
+            if (sosBtn && sirenSound) {
+                sosBtn.addEventListener('click', () => {
+                    playClick(); // Звук клика
+
+                    const randomMsg = sosMessages[Math.floor(Math.random() * sosMessages.length)];
+                    sosMessage.style.display = "block";
+                    sosMessage.textContent = randomMsg;
+                    sirenSound.currentTime = 0; 
+                    sirenSound.play().catch(e => console.log("Ошибка звука сирены:", e));
+                    document.body.classList.add("siren-flash");
+                    setTimeout(() => {
+                        document.body.classList.remove("siren-flash");
+                    }, 2500); 
+                });
+            }
+
+            // --- 3. ЗВУК КЛИКА ПО МЕНЮ ---
+            document.querySelectorAll('.main-nav a, .action-btn').forEach(link => {
+                link.addEventListener('click', () => {
+                    playClick(); // Звук клика
+                });
+            });
+
+            // --- 4. ТЕСТ В МОДАЛЬНОМ ОКНЕ ---
+            const modal = document.getElementById('quiz-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalQuizBtns = document.querySelectorAll('#quiz-modal .quiz-btn');
+            const modalQuizMessage = document.getElementById('modal-quiz-message');
+            const triggerBtns = document.querySelectorAll('.trigger-quiz');
+
+            if (modal) {
+                modal.style.display = "none";
+            }
+
+            triggerBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    playClick(); // Звук клика
+                    if (modal) modal.style.display = "flex"; 
+                });
+            });
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    playClick(); // Звук клика
+                    if (modal) modal.style.display = "none";
+                    if (modalQuizMessage) modalQuizMessage.textContent = ""; 
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = "none";
+                        if (modalQuizMessage) modalQuizMessage.textContent = "";
+                    }
+                });
+            }
+
+            modalQuizBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playClick(); // Звук клика
+
+                    const isCorrect = btn.getAttribute('data-correct') === 'true';
+
+                    if (isCorrect) {
+                        modalQuizMessage.textContent = "Верно! Проходи, свой...";
+                        modalQuizMessage.style.color = "#00ffcc";
+                        setTimeout(() => {
+                            window.location.href = "rules.html";
+                        }, 1500);
+                    } else {
+                        modalQuizMessage.textContent = "ОШИБКА! ДУМАЙ ГОЛОВОЙ, ПАЦАН!";
+                        modalQuizMessage.style.color = "#ff0000";
+                        document.body.classList.add('vhs-glitch');
+                        setTimeout(() => {
+                            document.body.classList.remove('vhs-glitch');
+                        }, 2000); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

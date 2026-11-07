@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слово Пацана | Кодекс</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>КОДЕКС УЛИЦЫ</h1>
+        <p>Западло • Понятия • Слово</p>
+        
+        <div style="margin-bottom: 15px;">
+            <button id="music-toggle" class="action-btn" style="padding: 10px 20px; font-size: 1em; background-color: #222;">🎵 ВКЛЮЧИТЬ МУЗЫКУ</button>
+            
+            <div id="music-player-container" style="display: none; margin: 15px auto 0 auto; max-width: 300px;">
+                <audio id="bg-music" src="Пыяла - АИГЕЛ.mp3" loop controls style="width: 100%;"></audio>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html">Главная</a>
+            <a href="rules.html" class="active">Кодекс улицы</a>
+            <a href="quotes.html">Цитаты и Атмосфера</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content-block">
+            <h2>Законы пацанов</h2>
+            <p>Чтобы выжить в мире, где правят улицы, нужно чётко знать правила. Нарушил слово — потерял уважение.</p>
+            <ul>
+                <li><strong>Не обманывай своих.</strong> Обман пацанов — это западло. За это спрашивают строго.</li>
+                <li><strong>Отвечай за базар.</strong> Сказал слово — держи. Не можешь ответить — не говори.</li>
+                <li><strong>Стоять за близких.</strong> Семья и пацаны — это святое. Обидел своего — отвечаешь перед всеми.</li>
+                <li><strong>Будь ровным.</strong> Не выпендривайся, не подставляйся и всегда держи спину прямо.</li>
+                <li><strong>Учись жизни.</strong> Улица научит всему, если умеешь слушать.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>Понятия из сериала</h2>
+            <p>Сленг, который выучил каждый пацан того времени.</p>
+            
+            <table class="interactive-table">
+                <tr>
+                    <th>Слово</th>
+                    <th>Значение</th>
+                </tr>
+                <tr>
+                    <td title="Без базара!">Чушь не пороть</td>
+                    <td>Говорить по факту, не нести бред.</td>
+                </tr>
+                <tr>
+                    <td title="Это западло!">Западло</td>
+                    <td>Поступок, который противоречит пацанским понятиям.</td>
+                </tr>
+                <tr>
+                    <td title="Держи спину прямо!">Спокойно</td>
+                    <td>Умение держать себя в руках в любой ситуации.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="content-block">
+            <div class="street-quote">
+                <p class="highlight">«Пацан сказал — пацан сделал. А если не сделал — значит, ты не пацан, а так, пустышка».</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="advice-btn" class="action-btn" style="border: none; cursor: pointer;">ЖМИТУХУ, ЧТОБЫ УСЛЫШАТЬ НАКАЗ</button>
+                <p id="advice-text" class="highlight" style="display: none; margin-top: 20px; background-color: #b33939;"></p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" class="action-btn">← Вернуться на главную</a>
+                <a href="quotes.html" class="action-btn trigger-quiz">К цитатам →</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Фан-сайт создан в рамках практики HTML & CSS.</p>
+        <p>&copy; 2026. Пацан сказал — пацан сделал.</p>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО С ТЕСТОМ -->
+    <div id="quiz-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>ПРОВЕРКА НА СВОЕГО</h2>
+            <p>Прежде чем пройти дальше, докажи, что знаешь правила.</p>
+            
+            <p style="font-weight: bold; font-size: 1.1em; margin-top: 20px;">Что значит «Западло»?</p>
+            
+            <button class="action-btn quiz-btn" data-correct="false" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">А) Ударить первым</button>
+            <button class="action-btn quiz-btn" data-correct="true" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">Б) Поступок против пацанских понятий</button>
+            <button class="action-btn quiz-btn" data-correct="false" style="display: block; width: 100%; margin: 10px 0; font-size: 1em;">В) Забыть дома ключи</button>
+            
+            <div id="modal-quiz-message" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+            
+            <button id="close-modal" style="background: none; border: none; color: #b33939; cursor: pointer; margin-top: 15px; text-decoration: underline; font-family: 'Oswald', sans-serif;">Отмена</button>
+        </div>
+    </div>
+
+    <!-- СКРИПТЫ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- НАДЕЖНЫЙ ЗВУК КЛИКА ---
+            const clickSound = new Audio();
+            clickSound.volume = 1.0;
+
+            // Пытаемся загрузить ваш файл audio.m4a
+            clickSound.src = 'audio.m4a';
+
+            // Если файл не загрузился (ошибка), подставляем звук из интернета
+            clickSound.addEventListener('error', () => {
+                console.log("Не удалось загрузить audio.m4a. Использую стандартный клик.");
+                clickSound.src = 'https://www.soundjay.com/button/sounds/button-16.mp3';
+            });
+
+            // Предзагрузка файла (чтобы он был готов к клику)
+            clickSound.load();
+
+            function playClick() {
+                clickSound.currentTime = 0; 
+                clickSound.play().catch(e => {
+                    console.log("Браузер заблокировал звук.");
+                }); 
+            }
+
+            // --- 1. УПРАВЛЕНИЕ МУЗЫКОЙ ---
+            const musicBtn = document.getElementById('music-toggle');
+            const bgMusic = document.getElementById('bg-music');
+            const playerContainer = document.getElementById('music-player-container');
+            
+            const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (bgMusic) {
+                bgMusic.currentTime = savedTime;
+                if (wasPlaying) {
+                    playerContainer.style.display = "block";
+                    bgMusic.play().then(() => {
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                    }).catch(e => console.log("Автовоспроизведение заблокировано."));
+                }
+                bgMusic.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicTime', bgMusic.currentTime);
+                });
+            }
+
+            if (musicBtn && bgMusic) {
+                musicBtn.addEventListener('click', () => {
+                    playClick(); // Звук клика
+
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                        musicBtn.textContent = "🎵 ВКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#222";
+                        localStorage.setItem('musicPlaying', 'false');
+                    } else {
+                        bgMusic.volume = 0.3;
+                        bgMusic.play();
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                        localStorage.setItem('musicPlaying', 'true');
+                        playerContainer.style.display = "block";
+                    }
+                });
+            }
+
+            // --- 2. ЗВУК КЛИКА ПО МЕНЮ ---
+            document.querySelectorAll('.main-nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    playClick();
+                });
+            });
+
+            // --- 3. ГЕНЕРАТОР НАКАЗОВ ---
+            const adviceList = [
+                "За базар отвечай. Сказал — держи.",
+                "Не будь крысой. Западло — это навсегда.",
+                "Стоять за пацанов — святое.",
+                "Держи спину прямо, даже если тяжело.",
+                "Учись слушать. Улица ошибок не прощает."
+            ];
+
+            const adviceBtn = document.getElementById('advice-btn');
+            const adviceText = document.getElementById('advice-text');
+
+            if (adviceBtn && adviceText) {
+                adviceBtn.addEventListener('click', () => {
+                    playClick();
+
+                    const randomAdvice = adviceList[Math.floor(Math.random() * adviceList.length)];
+                    adviceText.style.display = "block";
+                    adviceText.textContent = randomAdvice;
+                    
+                    adviceBtn.style.transform = "scale(0.95)";
+                    setTimeout(() => {
+                        adviceBtn.style.transform = "scale(1)";
+                    }, 150);
+                });
+            }
+
+            // --- 4. ТЕСТ В МОДАЛЬНОМ ОКНЕ ---
+            const modal = document.getElementById('quiz-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalQuizBtns = document.querySelectorAll('#quiz-modal .quiz-btn');
+            const modalQuizMessage = document.getElementById('modal-quiz-message');
+            const triggerBtns = document.querySelectorAll('.trigger-quiz');
+
+            if (modal) modal.style.display = "none";
+
+            triggerBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    playClick();
+                    modal.style.display = "flex"; 
+                });
+            });
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    playClick();
+                    modal.style.display = "none";
+                    modalQuizMessage.textContent = ""; 
+                });
+            }
+
+            modalQuizBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playClick();
+
+                    const isCorrect = btn.getAttribute('data-correct') === 'true';
+
+                    if (isCorrect) {
+                        modalQuizMessage.textContent = "Верно! Проходи дальше...";
+                        modalQuizMessage.style.color = "#00ffcc";
+                        setTimeout(() => {
+                            window.location.href = "quotes.html";
+                        }, 1500);
+                    } else {
+                        modalQuizMessage.textContent = "ОШИБКА! ДУМАЙ ГОЛОВОЙ, ПАЦАН!";
+                        modalQuizMessage.style.color = "#ff0000";
+                        document.body.classList.add('vhs-glitch');
+                        setTimeout(() => {
+                            document.body.classList.remove('vhs-glitch');
+                        }, 2000); 
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

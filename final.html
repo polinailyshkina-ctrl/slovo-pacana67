@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слово Пацана | Экзамен сдан</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="siren-sound" src="siren.m4a" preload="auto"></audio>
+    <audio id="welcome-sound" src="ulic4a-5.mp3" preload="auto"></audio>
+    <audio id="click-sound" src="audio.m4a" preload="auto"></audio>
+
+    <header>
+        <h1>ЭКЗАМЕН СДАН</h1>
+        <p>Проверка на вшивость пройдена</p>
+        
+        <div style="margin-bottom: 15px;">
+            <button id="music-toggle" class="action-btn" style="padding: 10px 20px; font-size: 1em; background-color: #222;">🎵 ВКЛЮЧИТЬ МУЗЫКУ</button>
+            
+            <div id="music-player-container" style="display: none; margin: 15px auto 0 auto; max-width: 300px;">
+                <audio id="bg-music" src="Пыяла - АИГЕЛ.mp3" loop controls style="width: 100%;"></audio>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html">Главная</a>
+            <a href="rules.html">Кодекс улицы</a>
+            <a href="quotes.html">Цитаты и Атмосфера</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content-block" style="text-align: center;">
+            
+            <div class="stamp">
+                <span class="stamp-text">СВОЙ</span>
+            </div>
+
+            <h2 style="font-size: 2.5em; margin-top: 20px;">ТЕПЕРЬ ТЫ — ПАЦАН</h2>
+            
+            <p style="font-size: 1.3em; font-weight: bold; color: #b33939;">
+                А не какой-то там чушпан!
+            </p>
+            
+            <p>Ты доказал, что знаешь понятия, отвечаешь за базар и держишь спину прямо. Добро пожаловать на улицу.</p>
+
+            <div style="margin: 40px 0; padding: 20px; border: 3px dashed #111; background-color: #fff;">
+                <p style="font-family: 'Oswald', sans-serif; font-size: 1.2em; text-transform: uppercase; letter-spacing: 2px;">
+                    Кодекс усвоен. Слово дано. Слово будет держаться.
+                </p>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="index.html" class="action-btn">← Вернуться на главную</a>
+                <a href="quotes.html" class="action-btn">К цитатам</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Фан-сайт создан в рамках практики HTML & CSS.</p>
+        <p>&copy; 2026. Пацан сказал — пацан сделал.</p>
+    </footer>
+
+    <script>
+        // Ждем загрузки
+        window.onload = function() {
+            const clickSound = document.getElementById('click-sound');
+            const bgMusic = document.getElementById('bg-music');
+            const musicBtn = document.getElementById('music-toggle');
+            const playerContainer = document.getElementById('music-player-container');
+            const welcomeSound = document.getElementById('welcome-sound');
+
+            // 1. Включаем звук клика на КАЖДЫЙ клик по сайту
+            document.addEventListener('click', function() {
+                if (clickSound) {
+                    clickSound.currentTime = 0;
+                    clickSound.volume = 1.0;
+                    clickSound.play().catch(e => {});
+                }
+            });
+
+            // 2. Звук триумфа
+            if (welcomeSound) {
+                setTimeout(() => {
+                    welcomeSound.volume = 0.6;
+                    welcomeSound.play().catch(e => {});
+                }, 300);
+            }
+
+            // 3. Музыка
+            const wasPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            if (bgMusic) {
+                bgMusic.volume = 0.15; 
+                bgMusic.currentTime = savedTime;
+
+                if (wasPlaying) {
+                    playerContainer.style.display = "block";
+                    bgMusic.play().catch(e => {});
+                    musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                    musicBtn.style.backgroundColor = "#b33939";
+                }
+                bgMusic.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicTime', bgMusic.currentTime);
+                });
+            }
+
+            if (musicBtn && bgMusic) {
+                musicBtn.addEventListener('click', () => {
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                        musicBtn.textContent = "🎵 ВКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#222";
+                        localStorage.setItem('musicPlaying', 'false');
+                    } else {
+                        bgMusic.volume = 0.15; 
+                        bgMusic.play();
+                        musicBtn.textContent = "⏹ ВЫКЛЮЧИТЬ МУЗЫКУ";
+                        musicBtn.style.backgroundColor = "#b33939";
+                        localStorage.setItem('musicPlaying', 'true');
+                        playerContainer.style.display = "block";
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>
