@@ -396,3 +396,27 @@ body.vhs-glitch::after {
     0% { transform: scale(3) rotate(-15deg); opacity: 0; }
     100% { transform: scale(1) rotate(-15deg); opacity: 1; }
 }
+/* --- АДАПТАЦИЯ ТАБЛИЦЫ ДЛЯ ТЕЛЕФОНОВ --- */
+@media (max-width: 600px) {
+    /* Делаем шрифт в таблице чуть меньше, чтобы все влезло */
+    table {
+        font-size: 0.8em; 
+        width: 100%;
+    }
+    
+    /* Уменьшаем отступы внутри ячеек */
+    th, td {
+        padding: 6px;
+    }
+    
+    /* Разрешаем тексту переноситься на новую строку в узких колонках */
+    td, th {
+        word-wrap: break-word;
+        white-space: normal; 
+    }
+    
+    /* Убираем лишние отступы у карточек, чтобы они занимали меньше места */
+    .content-block {
+        padding: 15px;
+    }
+}
