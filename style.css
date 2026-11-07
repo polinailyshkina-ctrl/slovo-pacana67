@@ -291,9 +291,20 @@ body.siren-flash::after {
 /* --- СКРЕМБЛЕР (ЭФФЕКТ VHS-ГЛЮКА БЕЗ ТРЯСКИ) --- */
 body.vhs-glitch::after {
     content: "⚠ СИГНАЛ ПОТЕРЯН ⚠";
+    
+    /* Жестко фиксируем на весь экран (учитывая панели телефона) */
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* 100% ширина и высота (с поддержкой динамических панелей) */
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; 
+    
+    /* Фон из полос (помехи) */
     background: repeating-linear-gradient(
         0deg,
         rgba(0, 0, 0, 0.9),
@@ -302,6 +313,32 @@ body.vhs-glitch::after {
         rgba(255, 0, 0, 0.3) 4px,
         rgba(0, 255, 204, 0.3) 4px,
         rgba(0, 255, 204, 0.3) 6px
+    );
+    
+    color: #ff0000;
+    /* Делаем шрифт адаптивным: 10% от высоты экрана (чтобы влезал на телефоне) */
+    font-size: 10vh; 
+    font-family: 'Oswald', sans-serif;
+    
+    /* Центрируем текст */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Клики проходят сквозь (чтобы можно было нажать кнопки) */
+    pointer-events: none; 
+    z-index: 999999; 
+    
+    text-shadow: 3px 3px 0 #000;
+    opacity: 0.9;
+    animation: blink-glitch 0.5s infinite alternate;
+}
+
+@keyframes blink-glitch {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
     );
     color: #ff0000;
     font-size: 10vh; 
@@ -419,4 +456,35 @@ body.vhs-glitch::after {
     .content-block {
         padding: 15px;
     }
+}
+/* --- ЭФФЕКТ СИРЕНЫ (КРАСНАЯ ВСПЫШКА) --- */
+body.siren-flash::after {
+    content: "";
+    
+    /* Жесткая привязка ко всем краям экрана */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* Гарантируем 100% ширину и высоту */
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* Для новых браузеров (учитывает панели) */
+    
+    /* Само свечение */
+    box-shadow: inset 0 0 150px 50px rgba(255, 0, 0, 0.8);
+    
+    /* Поверх всего */
+    pointer-events: none;
+    z-index: 999999; 
+    
+    /* Анимация */
+    animation: alarm-pulse 0.4s infinite alternate;
+}
+
+@keyframes alarm-pulse {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
 }
